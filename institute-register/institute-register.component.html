@@ -1,0 +1,473 @@
+<div class="container py-5">
+  <div class="card">
+    <h4 class="card-header text-center">Institute Registration Form</h4>
+    <div class="card-body px-4">
+      <form 
+      class="mt-2"
+      #instituteRegisterForm="ngForm"
+      (ngSubmit)="onSubmit()"
+      novalidate>
+      {{ instituteModel | json }}
+        <h5 class="underline mb-3 mt-2">Basic Details:</h5>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label" for="Category">Institute Category</label>
+            <select class="form-select" aria-label="Default select example"
+              name="InstituteCategory"
+              #institutecategory="ngModel"
+              [class.is-invalid]="institutecategory.invalid && institutecategory.touched"
+              [(ngModel)]="instituteModel.InstituteCategory"
+              required>
+
+              <option value="">Select Category</option>
+             
+              <option *ngFor="let institutecategory of institutecategories" [value]="institutecategory">
+                {{ institutecategory }}
+              </option>
+            </select>
+            <small
+              class="invalid-feedback"
+              *ngIf="institutecategory.valid || institutecategory.untouched"
+              >Please choose your Institute Category</small>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="State">State</label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              name="State"
+              #state="ngModel"
+              [(ngModel)]="instituteModel.State"
+              (change)="changeDistrict($event)"
+              required>
+              <option value="">Select State</option>
+              <option *ngFor="let state of states" value="{{ state.state }}">
+                {{ state.state }}
+              </option>
+            </select>
+            <small
+              class="invalid-feedback"
+              *ngIf="state.valid || state.untouched">Please choose a state
+            </small>
+          </div>
+          <div class="col-md-4">
+            <label for="name" class="form-label">District</label>
+            <select class="form-select" aria-label="Default select example"
+              #district="ngModel"
+              name="District"
+              [(ngModel)]="instituteModel.District"
+              [class.is-invalid]="district.invalid && district.touched"
+              required>
+              <option value="">Select District</option>
+              <option *ngFor="let district of districts" value="{{ district }}">
+                {{ district }}
+              </option>
+            </select>
+            <small
+              class="invalid-feedback"
+              *ngIf="district.valid || district.untouched">
+                Please choose your district
+            </small>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="name" class="form-label">Name Of Institute</label>
+            <input
+              type="text"
+              name="InstituteName"
+              class="form-control"
+              id="name"
+              required
+              #instituteName="ngModel"
+              [(ngModel)]="instituteModel.InstituteName"
+              [class.is-invalid]="instituteName.invalid && instituteName.touched"/>
+            <small
+              class="invalid-feedback"
+              *ngIf="instituteName.errors &&(instituteName.invalid || instituteName.touched)">Institute Name is required
+            </small>
+          </div>
+          <div class="col-md-3">
+            <label for="Institute Code" class="form-label">Institute Code</label>
+            <input
+              type="text"
+              name="InstituteCode"
+              class="form-control"
+              id="Institute Code"
+              required
+              #instituteCode="ngModel"
+              [(ngModel)]="instituteModel.InstituteCode"
+              [class.is-invalid]="instituteCode.invalid && instituteCode.touched"/>
+            <small
+              class="invalid-feedback"
+              *ngIf="instituteCode.errors &&(instituteCode.invalid || instituteCode.touched)">
+              Institute Code is required
+            </small>
+          </div>
+          <div class="col-md-3">
+            <label for="District Code" class="form-label">District Code</label>
+            <input
+              type="text"
+              name="DistrictCode"
+              class="form-control"
+              id="District Code"
+              required
+              #districtCode="ngModel"
+              [(ngModel)]="instituteModel.DistrictCode"
+              [class.is-invalid]="districtCode.invalid && districtCode.touched"/>
+
+            <small
+              class="invalid-feedback"
+              *ngIf="
+                districtCode.errors &&(districtCode.invalid || districtCode.touched)">District Code is required
+            </small>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <label class="form-label" for="Location">Location</label>
+            <select class="form-select" aria-label="Default select example"
+            #location="ngModel"
+            name="Location"
+            [(ngModel)]="instituteModel.Location"
+            [class.is-invalid]="location.invalid && location.touched"
+            required>
+              <option value="">Location</option>
+              
+              <option *ngFor="let location of locations" [value]="location">
+                {{ location }}
+              </option>
+            </select>
+            <small
+              class="invalid-feedback"
+              *ngIf="location.valid || location.untouched"
+              >Please choose your Location Type</small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-5">
+            <label class="form-label" for="Institute Type">Institute Type</label>
+            <select class="form-select" aria-label="Default select example"
+            #instituteType="ngModel"
+            name="InstituteType"
+            [(ngModel)]="instituteModel.InstituteType"
+            [class.is-invalid]="instituteType.invalid && instituteType.touched"
+            required>
+              <option value="">Institute Type</option>
+              
+              <option *ngFor="let instituteType of instituteTypes" [value]="instituteType">
+                {{ instituteType }}
+              </option>
+            </select>
+            <small
+              class="invalid-feedback"
+              *ngIf="instituteType.valid || instituteType.untouched">Please choose your Institute Type
+            </small>
+            
+          </div>
+          <div class="col-md-5">
+            <label class="form-label" for="Affiliated University State">Affiliated University State</label>
+            <select class="form-select" aria-label="Default select example"
+            #affiliatedState="ngModel"
+            name="AffiliatedState"
+            [(ngModel)]="instituteModel.AffiliatedState"
+            [class.is-invalid]="affiliatedState.invalid && affiliatedState.touched"
+            required>
+              <option value="">Select State</option>
+              <option *ngFor="let state of states" [value]="state.state">
+                {{ state.state }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-7">
+            <label for="Affiliated University/Board Name" class="form-label">Affiliated University/Board Name</label>
+            <input
+              type="text"
+              name="AffiliatedUniversity"
+              class="form-control"
+              id="Affiliated University/Board Name"
+              #affiliatedUniversity="ngModel"
+              [(ngModel)]="instituteModel.AffiliatedUniversity"
+              [class.is-invalid]="affiliatedUniversity.invalid && affiliatedUniversity.touched"
+              required/>
+
+            <small
+              class="invalid-feedback"
+              *ngIf="affiliatedUniversity.errors && (affiliatedUniversity.invalid || affiliatedUniversity.touched)">
+                Enter University
+            </small>
+          </div>
+          <div class="col-md-5">
+            <label class="form-label" for="Year">Year From Which Admission Started</label>
+            <select class="form-select" aria-label="Default select example"
+            #year="ngModel"
+            name="Year"
+            [(ngModel)]="instituteModel.Year"
+            [class.is-invalid]="year.invalid && year.touched"
+            required>
+            <option value="">Select Year</option>
+            <option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </option>
+          </select>
+          <small
+            class="invalid-feedback"
+            *ngIf="year.valid || year.untouched">
+              Please choose your Year of Admission
+          </small>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              name="Password"
+              id="password"
+              class="form-control"
+              #password="ngModel"
+              [(ngModel)]="instituteModel.Password"
+              [class.is-invalid]="password.invalid && password.touched"
+              required />
+            <small
+              class="invalid-feedback"
+              *ngIf="password.errors && (password.invalid || password.touched)">
+                Password is required
+            </small>
+          </div>
+          <div class="col-md-6">
+            <label for="password2" class="form-label">Confirm Password</label>
+            <input
+              type="password"
+              name="Password2"
+              class="form-control"
+              #password2="ngModel"
+              [(ngModel)]="instituteModel.Password2"
+              [class.is-invalid]="password.invalid && password.touched"
+              required/>
+            <small
+              class="invalid-feedback"
+              *ngIf="password2.errors && (password2.invalid || password2.touched)">Confirm Password is required
+            </small>
+          </div>
+        </div>
+        <h5 class="underline mb-3 mt-4">Proof of Existence of Institute:</h5>
+        <div class="row mb-3">
+          <div class="col-md-8">
+            <label for="formFile" class="form-label">Institute Establishment/Registration Certificate</label>
+            <input class="form-control" type="file" id="formFile" />
+          </div>
+        </div>
+        <h5 class="underline mb-3 mt-4">Affiliated To:</h5>
+        <div class="row mb-3">
+          <div class="col-md-8">
+            <label for="formFile" class="form-label">University/Board Affiliation Certificate</label>
+            <input class="form-control" type="file" id="formFile" />
+          </div>
+        </div>
+
+        <h5 class="underline mb-3 mt-4">Address:</h5>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="Line 1" class="form-label">Address Line 1</label>
+            <input
+              type="text"
+              name="Line1"
+              class="form-control"
+              id="Line 1"
+              #line1="ngModel"
+              [class.is-invalid]="line1.invalid && line1.touched"
+              [(ngModel)]="instituteModel.Line1"
+              required/>
+
+            <small
+              class="invalid-feedback"
+              *ngIf="line1.errors && (line1.invalid || line1.touched)">
+              Required
+            </small>
+          </div>
+          <div class="col-md-6">
+            <label for="Line 2" class="form-label">Address Line 2</label>
+            <input
+              type="text"
+              name="Line2"
+              class="form-control"
+              id="Line 2"
+              #line2="ngModel"
+              [class.is-invalid]="line2.invalid && line2.touched"
+              [(ngModel)]="instituteModel.Line2"
+              required/>
+            <small
+              class="invalid-feedback"
+              *ngIf="line2.errors && (line2.invalid || line2.touched)">
+                Required
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <label for="City" class="form-label">City</label>
+            <input
+              type="text"
+              name="City"
+              class="form-control"
+              id="City"
+              #city="ngModel"
+              [class.is-invalid]="city.invalid && city.touched"
+              [(ngModel)]="instituteModel.City"
+              required/>
+
+            <small
+              class="invalid-feedback"
+              *ngIf="city.errors && (city.invalid || city.touched)">
+                Required
+            </small>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="Affiliated University State">State</label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              name="Ustate"
+              (change)="changeDistrict($event)"
+              #ustate="ngModel"
+              [class.is-invalid]="ustate.invalid && ustate.touched"
+              [(ngModel)]="instituteModel.Ustate"
+              required>
+              <option value="">Select State</option>
+              <option *ngFor="let state of states" value="{{ state.state }}">
+                {{ state.state }}
+              </option>
+            </select>
+            <small
+              class="invalid-feedback"
+              *ngIf="ustate.valid || ustate.untouched">
+                Please choose a state
+            </small>
+          </div>
+          <div class="col-md-3">
+            <label for="name" class="form-label">District Name </label>
+            <select class="form-select" aria-label="Default select example"
+            name="Udistrict"
+            #udistrict="ngModel"
+            [class.is-invalid]="udistrict.invalid && udistrict.touched"
+            [(ngModel)]="instituteModel.Udistrict"
+            required>
+              <option value="">Select District</option>
+              <option *ngFor="let district of districts" value="{{ district }}">
+                {{ district }}
+              </option>
+            </select>
+            <small
+              class="invalid-feedback"
+              *ngIf="udistrict.valid || udistrict.untouched">
+                Please choose a District
+            </small>
+          </div>
+          <div class="col-md-2">
+            <label for="Pincode" class="form-label">Pincode</label>
+            <input
+              type="text"
+              name="Pin"
+              class="form-control"
+              id="Pincode"
+              #pin="ngModel"
+              [class.is-invalid]="pin.invalid && pin.touched"
+              [(ngModel)]="instituteModel.Pin"
+              required/>
+            <small
+              class="invalid-feedback"
+              *ngIf="pin.errors && (pin.invalid || pin.touched)">
+                Enter valid PinCode
+            </small>
+          </div>
+        </div>
+
+        <h5 class="underline mb-3 mt-4">Contact Details:</h5>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="name" class="form-label">Principal Name </label>
+            <input
+              type="text"
+              name="PrincipalName"
+              class="form-control"
+              id="principalName"
+              #principalName="ngModel"
+              [class.is-invalid]="principalName.invalid && principalName.touched"
+              [(ngModel)]="instituteModel.PrincipalName"
+              required/>
+            <small
+              class="invalid-feedback"
+              *ngIf="principalName.errors && (principalName.invalid || principalName.touched)">
+                Valid name Required
+            </small>
+          </div>
+          <div class="col-md-4">
+            <label for="mobile" class="form-label">Mobile Number </label>
+            <input
+              type="text"
+              name="Mobile"
+              class="form-control"
+              #mobile="ngModel"
+              [class.is-invalid]="mobile.invalid && mobile.touched"
+              [(ngModel)]="instituteModel.Mobile"
+              required
+            />
+            <small
+              class="invalid-feedback"
+              *ngIf="mobile.errors && (mobile.invalid || mobile.touched)">
+              Mobile number is required
+            </small>
+          <div class="col-md-4">
+            <label for="telephone" class="form-label">Telephone </label>
+            <input
+              type="text"
+              name="Telephone"
+              class="form-control"
+              #telephone="ngModel"
+              [class.is-invalid]="telephone.invalid && telephone.touched"
+              [(ngModel)]="instituteModel.Telephone"
+              required/>
+
+            <small
+              class="invalid-feedback"
+              *ngIf="telephone.errors && (telephone.invalid || telephone.touched)">
+                Phone number is required
+            </small>
+
+          </div>
+        </div>
+        <div class="form-check mb-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+          />
+          <label
+            class="form-check-label text-muted text-sm"
+            for="flexCheckDefault">
+            All the details and documents submitted by us are valid and true if
+            found guilty of submitting invalid documents we may be held
+            responsible for that act by us.
+          </label>
+        </div>
+
+        <div class="card-body px-1"></div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+          <button type="submit" class="btn btn-dark px-4" [disabled]="instituteRegisterForm.form.invalid">Apply</button>
+          <button type="submit" class="btn btn-outline-secondary px-4">
+            Reset
+          </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
